@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import * as components from './components';
+import * as components from './components.jsx';
 import { addTodo, toggleTodo } from './actions';
 
 export const TodoList = connect(

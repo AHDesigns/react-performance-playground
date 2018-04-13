@@ -27,14 +27,6 @@ const makeInitialList = (scale) => {
 }
 const init = List(makeInitialList(60));
 
-// const init = List([
-//         Map({
-//                 id: uid(),
-//                 isDone: false,
-//                 text: makeWord()
-//         })
-// ]);
-
 export default function reducer(todos=init, action) {
   switch(action.type) {
     case 'ADD_TODO':
