@@ -1,12 +1,28 @@
 import React from 'react';
 
-export function Todo(props) {
-  const { todo } = props;
+export class Todo extends React.PureComponent {
+  shouldComponentUpdate(newProps) {
+    // const { todos } = this.props;
+    // const { todos: newTodos } = newProps;
+    // console.log('value: ', todos.get(1) === newTodos.get(1));
+    // console.log('reference: ', todos.get(1) === newTodos.get(1));
+    // console.log(todos.get(1));
+    // console.log(newTodos.get(1));
+    // console.log('---------------');
+    return true;
+  }
 
-  if(todo.isDone) {
-    return <strike>{todo.text}</strike>;
-  } else {
-    return <span>{todo.text}</span>;
+  render() {
+    const { todo, toggleTodo } = this.props;
+    return (
+      <div className='todo__item' onClick={this.props.clickHandler}>
+        {
+          todo.nestedData.isDone ?
+            <strike>{todo.nestedData.text}</strike> :
+            <span>{todo.nestedData.text}</span>
+        }
+      </div>
+    );
   }
 }
 
@@ -14,7 +30,17 @@ export class TodoList extends React.PureComponent {
   constructor() {
     super();
     this.onSubmit = this.onSubmit.bind(this);
-    this.toggleClick = this.toggleClick.bind(this);
+  }
+
+  shouldComponentUpdate(newProps) {
+    const { todos } = this.props;
+    const { todos: newTodos } = newProps;
+    console.log('value: ', todos.get(1) === newTodos.get(1));
+    console.log('reference: ', todos.get(1) === newTodos.get(1));
+    console.log(todos.get(1));
+    console.log(newTodos.get(1));
+    console.log('---------------');
+    return true;
   }
 
   onSubmit(event) {
@@ -30,18 +56,13 @@ export class TodoList extends React.PureComponent {
     }
   };
 
-  toggleClick(id) {
-    const { toggleTodo  } = this.props;
-    toggleTodo(id)
+  clickHandler = (param) => () => {
+    param.toggleTodo(param.id)
   }
-
-  // clickHandler = (param) => (e) => {
-  //   e.preventDefault();
-  //   param.toggleTodo(param.id)
-  // }
 
   render() {
     const { todos, toggleTodo } = this.props;
+
     return (
       <div className='wrapper'>
         <input type='text'
@@ -49,15 +70,11 @@ export class TodoList extends React.PureComponent {
           placeholder='Add todo'
           onKeyDown={this.onSubmit} />
         <div className='todo'>
-          {todos.map(t => (
-            <div key={t.get('id')}
-              className='todo__item'
-              onClick={() => { this.toggleClick( t.get('id') ); }}
-            >
-              <Todo todo={t.toJS()} />
-
-            </div>
-          ))}
+          { todos.map(t => <Todo
+            key={t.get('id')}
+            clickHandler={this.clickHandler({ toggleTodo, id: t.get('id')})}
+            todo={t.toJS()} />)
+          }
         </div>
       </div>
     );
