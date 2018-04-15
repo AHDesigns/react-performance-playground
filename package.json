@@ -19,6 +19,7 @@
     "redux": "^3.7.2"
   },
   "devDependencies": {
+    "assert": "^1.4.1",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",

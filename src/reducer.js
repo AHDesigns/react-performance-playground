@@ -1,4 +1,6 @@
 import { List, Map } from 'immutable';
+// import { List, Map } from './myImmutabilty';
+
 
 function makeWord() {
   var text = "";
@@ -14,7 +16,7 @@ const uid = () => Math.random().toString(34).slice(2);
 
 const makeInitialList = (scale) => {
   const list = [];
-  for (let x = 0; x< 10*scale; x++) {
+  for (let x = 0; x< scale; x++) {
     list.push(
       Map({
         id: uid(),
@@ -27,31 +29,54 @@ const makeInitialList = (scale) => {
   };
   return list;
 }
-const init = List(makeInitialList(20));
+const init = List([
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+]);
+
+console.log(init);
 
 export default function reducer(todos=init, action) {
   switch(action.type) {
     case 'ADD_TODO':
-      console.log(todos);
-      const newList = todos.push(
-        Map({
-          id: uid(),
-          nestedData: Map({
-            text: action.payload,
-            isDone: false
-          })
-        })
-      );
-      console.log(newList);
-      return newList;
-    case 'TOGGLE_TODO':
-      return todos.map(t => {
-        if(t.get('id') === action.payload) {
-          return t.updateIn(['nestedData', 'isDone'], isDone => !isDone);
+      const a =  todos.map((tRow, idx) => {
+        if(idx === 0) {
+          return tRow.insert(0,
+            Map({
+              id: uid(),
+              nestedData: Map({
+                text: action.payload.text,
+                isDone: false
+              })
+            })
+          );
         } else {
-          return t;
+          return tRow
         }
       });
+      return a
+    case 'TOGGLE_TODO':
+      const s = todos.map(tRow => {
+        return tRow.map(t => {
+          if(t.get('id') === action.payload) {
+            const newT = t.updateIn(['nestedData', 'isDone'], isDone => !isDone);
+            return newT
+          } else {
+            return t;
+          }
+        })
+      });
+      return s;
+      // hack to turn of immutabilty
+      return List(s);
     default:
       return todos;
   }
