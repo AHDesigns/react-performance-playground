@@ -58,6 +58,14 @@ html, body, input, button {
   background: #B2D8FF;
 }
 
+.todo__item--done {
+        color: red;
+        text-decoration: line-through;
+}
+img {
+  width: 100%;
+}
+
 strike {
         color: red;
 }

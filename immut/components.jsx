@@ -1,24 +1,33 @@
 import React from 'react';
 import assert from 'assert'
 
-export class Todo extends React.PureComponent {
+export class Todo extends React.Component {
+  shouldComponentUpdate(newProps) {
+    if (this.props.todo.equals(newProps.todo)) {
+      // console.log('NOT renderd item');
+      return false;
+    }
+
+    return true;
+  }
+
   render() {
     const { todo } = this.props;
     // console.log(todo);
-    console.log('render itm');
+    // console.log('render itm');
     return (
       <div className='todo__item' onClick={this.props.clickHandler}>
         {
-          todo.nestedData.isDone ?
-            <strike>{todo.nestedData.text}</strike> :
-            <span>{todo.nestedData.text}</span>
+          todo.getIn(['nestedData', 'isDone']) ?
+            <strike>{todo.getIn(['nestedData', 'text'])}</strike> :
+            <span>{todo.getIn(['nestedData', 'text'])}</span>
         }
       </div>
     );
   }
 }
 
-export class TableRow extends React.PureComponent {
+export class TableRow extends React.Component {
   shouldComponentUpdate(newProps) {
     // using no immutability this breaks because the arrays hv
     // have been mutated
@@ -36,10 +45,10 @@ export class TableRow extends React.PureComponent {
     // }
 
     // IMMUTABILTY
-    // if (this.props.todos.equals(newProps.todos)) {
-    //   console.log('hit');
-    //   return false;
-    // }
+    if (this.props.todos.equals(newProps.todos)) {
+      // console.log('NOT renderd row');
+      return false;
+    }
 
     return true;
   }
@@ -54,7 +63,7 @@ export class TableRow extends React.PureComponent {
       { todos.map(t => <Todo
         key={t.get('id')}
         clickHandler={this.clickHandler({ toggleTodo, id: t.get('id')})}
-        todo={t.toJS()} />)
+        todo={t} />)
       }
     </div>
     )
@@ -65,11 +74,6 @@ export class TodoList extends React.PureComponent {
   constructor() {
     super();
     this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  shouldComponentUpdate(newProps) {
-    console.log(this.props.todos.equals(newProps.todos));
-    return true
   }
 
   onSubmit(event) {
@@ -87,6 +91,7 @@ export class TodoList extends React.PureComponent {
 
 
   render() {
+    console.log('-----------------------');
     const { todos, toggleTodo } = this.props;
     return (
       <div className='wrapper'>

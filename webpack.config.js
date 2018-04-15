@@ -1,8 +1,8 @@
 module.exports = {
-  entry: './src/app.js',
+  entry: './immut/app.js',
   output: {
-    path: __dirname,
-    filename: 'bundle.js'
+    path: `${__dirname}/immut`,
+    filename: 'immut.js'
   },
   module: {
     loaders: [

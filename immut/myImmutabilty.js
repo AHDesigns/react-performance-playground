@@ -17,6 +17,10 @@ export const Map = (value) => {
   return ({
     value,
     get(id) { return value[id]; },
+    getIn([p1,p2]) {
+      // hack that only works for 2
+      return value[p1].value[p2];
+    },
     updateIn([p1,p2], method) {
       // hack that only works for 2
       value[p1].value[p2] = method(value[p1].value[p2])
@@ -24,7 +28,8 @@ export const Map = (value) => {
     },
     toJS() {
       return findChild(value)
-    }
+    },
+    equals(v) { return value == v }
   })
 }
 
@@ -37,6 +42,7 @@ export const List = (value) => {
     get(id) { return value[id]; },
     toJS() {
       return findChild(value)
-    }
+    },
+    equals(v) { return value == v }
   })
 }
