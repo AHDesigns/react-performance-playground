@@ -1,20 +1,20 @@
 import React from 'react';
 import assert from 'assert'
 
-export class Todo extends React.Component {
-  shouldComponentUpdate(newProps) {
-    if (this.props.todo.equals(newProps.todo)) {
-      // console.log('NOT renderd item');
-      return false;
-    }
-
-    return true;
-  }
+export class Todo extends React.PureComponent {
+  // shouldComponentUpdate(newProps) {
+  //   if (this.props.todo.equals(newProps.todo)) {
+  //     // console.log('NOT renderd item');
+  //     return false;
+  //   }
+  //
+  //   return true;
+  // }
 
   render() {
     const { todo } = this.props;
     // console.log(todo);
-    // console.log('render itm');
+    console.log('render itm');
     return (
       <div className='todo__item' onClick={this.props.clickHandler}>
         {
@@ -27,7 +27,7 @@ export class Todo extends React.Component {
   }
 }
 
-export class TableRow extends React.Component {
+export class TableRow extends React.PureComponent {
   shouldComponentUpdate(newProps) {
     // using no immutability this breaks because the arrays hv
     // have been mutated
@@ -40,15 +40,18 @@ export class TableRow extends React.Component {
     // }
 
     // HACK
-    // if (JSON.stringify(this.props.todos) === JSON.stringify(newProps.todos)) {
-    //   return false;
-    // }
-
-    // IMMUTABILTY
-    if (this.props.todos.equals(newProps.todos)) {
-      // console.log('NOT renderd row');
+    // console.log(this.props.todos);
+    // console.log(newProps.todos);
+    // console.log(JSON.stringify(this.props.todos) === JSON.stringify(newProps.todos))
+    if (JSON.stringify(this.props.todos) === JSON.stringify(newProps.todos)) {
       return false;
     }
+
+    // IMMUTABILTY
+    // if (this.props.todos.equals(newProps.todos)) {
+    //   // console.log('NOT renderd row');
+    //   return false;
+    // }
 
     return true;
   }

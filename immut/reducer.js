@@ -30,31 +30,30 @@ const makeInitialList = (scale) => {
   return list;
 }
 const init = List([
-  List(makeInitialList(1500)),
   List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
 ]);
 
 // console.log(init);
 
-const checkList = List( init.map(t => t) )
-console.log(init);
-console.log(checkList);
-console.log('val', checkList == init);
-console.log('ref', checkList === init);
-console.time('fast');
-console.log('immut', init.equals(checkList));
-console.timeEnd('fast');
-console.time('slow');
-console.log('string', JSON.stringify(checkList) === JSON.stringify(init));
-console.timeEnd('slow');
+const checkList = init.map(t => t)
+// console.log(init);
+// console.log(checkList);
+// console.log('val', checkList == init);
+// console.log('ref', checkList === init);
+// console.time('fast');
+// console.log('immut', init.equals(checkList));
+// console.timeEnd('fast');
+// console.time('slow');
+// console.log('string', JSON.stringify(checkList) === JSON.stringify(init));
+// console.timeEnd('slow');
 
 export default function reducer(todos=init, action) {
   switch(action.type) {

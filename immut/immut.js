@@ -24509,32 +24509,23 @@ var makeInitialList = function makeInitialList(scale) {
   };
   return list;
 };
-var init = (0, _myImmutabilty.List)([(0, _myImmutabilty.List)(makeInitialList(1500)), (0, _myImmutabilty.List)(makeInitialList(150))]
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-);
+var init = (0, _myImmutabilty.List)([(0, _myImmutabilty.List)(makeInitialList(150)), (0, _myImmutabilty.List)(makeInitialList(150)), (0, _myImmutabilty.List)(makeInitialList(150)), (0, _myImmutabilty.List)(makeInitialList(150)), (0, _myImmutabilty.List)(makeInitialList(150)), (0, _myImmutabilty.List)(makeInitialList(150)), (0, _myImmutabilty.List)(makeInitialList(150)), (0, _myImmutabilty.List)(makeInitialList(150)), (0, _myImmutabilty.List)(makeInitialList(150))]);
 
 // console.log(init);
 
-var checkList = (0, _myImmutabilty.List)(init.map(function (t) {
+var checkList = init.map(function (t) {
   return t;
-}));
-console.log(init);
-console.log(checkList);
-console.log('val', checkList == init);
-console.log('ref', checkList === init);
-console.time('fast');
-console.log('immut', init.equals(checkList));
-console.timeEnd('fast');
-console.time('slow');
-console.log('string', JSON.stringify(checkList) === JSON.stringify(init));
-console.timeEnd('slow');
+});
+// console.log(init);
+// console.log(checkList);
+// console.log('val', checkList == init);
+// console.log('ref', checkList === init);
+// console.time('fast');
+// console.log('immut', init.equals(checkList));
+// console.timeEnd('fast');
+// console.time('slow');
+// console.log('string', JSON.stringify(checkList) === JSON.stringify(init));
+// console.timeEnd('slow');
 
 function reducer() {
   var todos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : init;
@@ -24750,8 +24741,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Todo = exports.Todo = function (_React$Component) {
-  _inherits(Todo, _React$Component);
+var Todo = exports.Todo = function (_React$PureComponent) {
+  _inherits(Todo, _React$PureComponent);
 
   function Todo() {
     _classCallCheck(this, Todo);
@@ -24760,22 +24751,22 @@ var Todo = exports.Todo = function (_React$Component) {
   }
 
   _createClass(Todo, [{
-    key: 'shouldComponentUpdate',
-    value: function shouldComponentUpdate(newProps) {
-      if (this.props.todo.equals(newProps.todo)) {
-        // console.log('NOT renderd item');
-        return false;
-      }
-
-      return true;
-    }
-  }, {
     key: 'render',
+
+    // shouldComponentUpdate(newProps) {
+    //   if (this.props.todo.equals(newProps.todo)) {
+    //     // console.log('NOT renderd item');
+    //     return false;
+    //   }
+    //
+    //   return true;
+    // }
+
     value: function render() {
       var todo = this.props.todo;
       // console.log(todo);
-      // console.log('render itm');
 
+      console.log('render itm');
       return _react2.default.createElement(
         'div',
         { className: 'todo__item', onClick: this.props.clickHandler },
@@ -24793,10 +24784,10 @@ var Todo = exports.Todo = function (_React$Component) {
   }]);
 
   return Todo;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
-var TableRow = exports.TableRow = function (_React$Component2) {
-  _inherits(TableRow, _React$Component2);
+var TableRow = exports.TableRow = function (_React$PureComponent2) {
+  _inherits(TableRow, _React$PureComponent2);
 
   function TableRow() {
     var _ref;
@@ -24830,15 +24821,18 @@ var TableRow = exports.TableRow = function (_React$Component2) {
       // }
 
       // HACK
-      // if (JSON.stringify(this.props.todos) === JSON.stringify(newProps.todos)) {
-      //   return false;
-      // }
-
-      // IMMUTABILTY
-      if (this.props.todos.equals(newProps.todos)) {
-        // console.log('NOT renderd row');
+      // console.log(this.props.todos);
+      // console.log(newProps.todos);
+      // console.log(JSON.stringify(this.props.todos) === JSON.stringify(newProps.todos))
+      if (JSON.stringify(this.props.todos) === JSON.stringify(newProps.todos)) {
         return false;
       }
+
+      // IMMUTABILTY
+      // if (this.props.todos.equals(newProps.todos)) {
+      //   // console.log('NOT renderd row');
+      //   return false;
+      // }
 
       return true;
     }
@@ -24866,10 +24860,10 @@ var TableRow = exports.TableRow = function (_React$Component2) {
   }]);
 
   return TableRow;
-}(_react2.default.Component);
+}(_react2.default.PureComponent);
 
-var TodoList = exports.TodoList = function (_React$PureComponent) {
-  _inherits(TodoList, _React$PureComponent);
+var TodoList = exports.TodoList = function (_React$PureComponent3) {
+  _inherits(TodoList, _React$PureComponent3);
 
   function TodoList() {
     _classCallCheck(this, TodoList);
