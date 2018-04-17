@@ -1,8 +1,8 @@
 module.exports = {
-  entry: './immut/app.js',
+  entry: './notI/app.js',
   output: {
     path: `${__dirname}`,
-    filename: 'immut.js'
+    filename: 'notI.js'
   },
   module: {
     loaders: [

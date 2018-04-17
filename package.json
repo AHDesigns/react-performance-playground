@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "start": "nodemon server.js | webpack --watch"
+    "start": "nodemon server.js",
+    "watch": "webpack --watch --config ./webpack.config.js",
+    "watchN": "webpack --watch --config ./webpack-notI.config.js"
   },
   "keywords": [],
   "author": "",

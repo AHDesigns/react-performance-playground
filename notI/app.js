@@ -11,6 +11,6 @@ render(
   <Provider store={store}>
     <TodoList />
   </Provider>,
-  document.getElementById('immutable')
+  document.getElementById('notI')
 );
 
