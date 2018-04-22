@@ -52,7 +52,7 @@ const makeInitialList = (scale) => {
         nestedData: {
           text: makeWord(),
           isDone: random_boolean,
-          img: random_boolean ? '../cross.png' : '../tick.png'
+          img: !random_boolean ? '../cross.png' : '../tick.png'
         }
       }
     );

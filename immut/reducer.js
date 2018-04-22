@@ -1,5 +1,5 @@
-// import { List, Map } from 'immutable';
-import { List, Map } from './myImmutabilty';
+import { List, Map } from 'immutable';
+// import { List, Map } from './myImmutabilty';
 
 
 function makeWord() {
@@ -17,12 +17,14 @@ const uid = () => Math.random().toString(34).slice(2);
 const makeInitialList = (scale) => {
   const list = [];
   for (let x = 0; x< scale; x++) {
+    const random_boolean = Math.random() >= 0.5;
     list.push(
       Map({
         id: uid(),
         nestedData: Map({
           text: makeWord(),
-          isDone: false
+          isDone: random_boolean,
+          img: !random_boolean ? '../cross.png' : '../tick.png'
         })
       })
     );
@@ -30,20 +32,21 @@ const makeInitialList = (scale) => {
   return list;
 }
 const init = List([
-  List(makeInitialList(150)),
-  List(makeInitialList(150)),
-  List(makeInitialList(150)),
-  List(makeInitialList(150)),
-  List(makeInitialList(150)),
-  List(makeInitialList(150)),
-  List(makeInitialList(150)),
-  List(makeInitialList(150)),
-  List(makeInitialList(150)),
+  List(makeInitialList(2)),
+  List(makeInitialList(2)),
+  // List(makeInitialList(150)),
+  // List(makeInitialList(150)),
+  // List(makeInitialList(150)),
+  // List(makeInitialList(150)),
+  // List(makeInitialList(150)),
+  // List(makeInitialList(150)),
+  // List(makeInitialList(150)),
+  // List(makeInitialList(150)),
 ]);
 
 // console.log(init);
 
-const checkList = init.map(t => t)
+// const checkList = init.map(t => t)
 // console.log(init);
 // console.log(checkList);
 // console.log('val', checkList == init);
@@ -65,7 +68,9 @@ export default function reducer(todos=init, action) {
               id: uid(),
               nestedData: Map({
                 text: action.payload.text,
-                isDone: false
+                isDone: false,
+                img: '../cross.png'
+
               })
             })
           );
@@ -78,16 +83,15 @@ export default function reducer(todos=init, action) {
       const s = todos.map(tRow => {
         return tRow.map(t => {
           if(t.get('id') === action.payload) {
-            const newT = t.updateIn(['nestedData', 'isDone'], isDone => !isDone);
-            return newT
+           return t
+              .updateIn(['nestedData', 'isDone'], isDone => !isDone)
+              .updateIn(['nestedData', 'img'], () => t.getIn(['nestedData', 'isDone']) ? '../cross.png' : '../tick.png')
           } else {
             return t;
           }
         })
       });
       return s;
-      // hack to turn of immutabilty
-      return List(s);
     default:
       return todos;
   }

@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "start": "nodemon server.js",
-    "watch": "webpack --watch --config ./webpack.config.js",
-    "watchN": "webpack --watch --config ./webpack-notI.config.js"
+    "watch": "webpack --watch --config ./webpack.config.js"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +19,8 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "redux-immutablejs": "0.0.8"
   },
   "devDependencies": {
     "assert": "^1.4.1",

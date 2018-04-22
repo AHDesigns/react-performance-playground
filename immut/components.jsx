@@ -1,83 +1,40 @@
 import React from 'react';
 import assert from 'assert'
 
-export class Todo extends React.PureComponent {
-  // shouldComponentUpdate(newProps) {
-  //   if (this.props.todo.equals(newProps.todo)) {
-  //     // console.log('NOT renderd item');
-  //     return false;
-  //   }
-  //
-  //   return true;
-  // }
+const logging = (log) => (
+  log
+  ? (string) => { console.log(string); }
+  : () => {}
+)
 
-  render() {
-    const { todo } = this.props;
-    // console.log(todo);
-    console.log('render itm');
-    return (
-      <div className='todo__item' onClick={this.props.clickHandler}>
-        {
-          todo.getIn(['nestedData', 'isDone']) ?
-            <strike>{todo.getIn(['nestedData', 'text'])}</strike> :
-            <span>{todo.getIn(['nestedData', 'text'])}</span>
-        }
-      </div>
-    );
-  }
-}
+const log = logging(0);
 
-export class TableRow extends React.PureComponent {
+class ImmutComponent extends React.Component {
   shouldComponentUpdate(newProps) {
-    // using no immutability this breaks because the arrays hv
-    // have been mutated
-    // const { todos } = this.props;
-    // const { todos: newTodos } = newProps;
-    // console.log('value: ', todos.values === newTodos.values);
-    // if (todos.values === newTodos.values) {
-    //   console.log('hit');
-    //   return false;
-    // }
-
-    // HACK
-    // console.log(this.props.todos);
-    // console.log(newProps.todos);
-    // console.log(JSON.stringify(this.props.todos) === JSON.stringify(newProps.todos))
-    if (JSON.stringify(this.props.todos) === JSON.stringify(newProps.todos)) {
-      return false;
+    // console.log(this.props);
+    // console.log(this.newProps);
+    const keys = Object.keys(this.props)
+    // console.log(keys);
+    let update = false;
+    for (const key of keys) {
+      // console.log(key);
+      console.log(`${[key]}: ${this.props[key]} . is equal: ${this.props[key] === newProps[key]}`);
+      // if(!this.props[key].equals(newProps[key])) {
+      //   update = true;
+      //   return;
+      // }
     }
-
-    // IMMUTABILTY
-    // if (this.props.todos.equals(newProps.todos)) {
-    //   // console.log('NOT renderd row');
-    //   return false;
-    // }
-
-    return true;
-  }
-
-  clickHandler = (param) => () => {
-    param.toggleTodo(param.id)
-  }
-  render() {
-    console.log('render row');
-    const { todos, toggleTodo } = this.props;
-    return ( <div>
-      { todos.map(t => <Todo
-        key={t.get('id')}
-        clickHandler={this.clickHandler({ toggleTodo, id: t.get('id')})}
-        todo={t} />)
-      }
-    </div>
-    )
+    return update;
   }
 }
 
-export class TodoList extends React.PureComponent {
+export class TodoList extends React.Component {
   constructor() {
     super();
     this.onSubmit = this.onSubmit.bind(this);
   }
+
+  componentWillUpdate() {log('------------------------')}
 
   onSubmit(event) {
     const input = event.target;
@@ -94,7 +51,6 @@ export class TodoList extends React.PureComponent {
 
 
   render() {
-    console.log('-----------------------');
     const { todos, toggleTodo } = this.props;
     return (
       <div className='wrapper'>
@@ -112,3 +68,51 @@ export class TodoList extends React.PureComponent {
   }
 }
 
+class TableRow extends ImmutComponent {
+  clickHandler = (param) => () => {
+    param.toggleTodo(param.id)
+  }
+  render() {
+    log('render row');
+    const { todos, toggleTodo } = this.props;
+    return ( <div>
+      { todos.map(t => <Todo
+        key={t.get('id')}
+        clickHandler={this.clickHandler({ toggleTodo, id: t.get('id')})}
+        todo={t} />)
+      }
+    </div>
+    )
+  }
+}
+
+class Todo extends ImmutComponent {
+  componentWillUpdate() { log('    render todo'); }
+
+  render() {
+    const { todo } = this.props;
+    // log('render todo');
+    return (
+      <div className='todo__item' onClick={this.props.clickHandler}>
+        <TodoDetails todo={todo.get('nestedData')} />
+      </div>
+    );
+  }
+}
+
+class TodoDetails extends ImmutComponent {
+  componentWillUpdate() { log('        render details'); }
+
+  render() {
+    const { todo } = this.props;
+    return (
+      <span>
+        <img src={todo.get('img')} />
+        { todo.get('isDone')
+            ? <strike>{todo.get('text')}</strike>
+            : <span>{todo.get('text')}</span>
+        }
+      </span>
+    )
+  }
+}

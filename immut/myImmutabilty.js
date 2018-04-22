@@ -29,7 +29,7 @@ export const Map = (value) => {
     toJS() {
       return findChild(value)
     },
-    equals(v) { return value == v }
+    equals(v) { return value === v },
   })
 }
 
@@ -43,6 +43,7 @@ export const List = (value) => {
     toJS() {
       return findChild(value)
     },
-    equals(v) { return value == v }
+    insert(pos, v) { return [v].concat(value) },
+    equals(v) { return value === v },
   })
 }
