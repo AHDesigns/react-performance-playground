@@ -9,6 +9,7 @@ const line = '\n----------------------------------------\n';
 app.use('/', express.static(join(__dirname, '/')));
 
 app.get('/', (req, res) => {
+  console.log('hi');
   console.log(
     chalk.yellow(line),
     chalk.green(`request: ${req.path}\n`),
@@ -18,7 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  process.stdout.write('\033c');
+  // process.stdout.write('\033c');
   console.log(
     chalk.gray(line),
     chalk.cyan(`  Now listening on port: ${port}`),

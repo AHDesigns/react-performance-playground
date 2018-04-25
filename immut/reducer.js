@@ -32,20 +32,20 @@ const makeInitialList = (scale) => {
   return list;
 }
 const init = List([
-  List(makeInitialList(2)),
-  List(makeInitialList(2)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
-  // List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
+  List(makeInitialList(150)),
 ]);
 
 // console.log(init);
-
+//
 // const checkList = init.map(t => t)
 // console.log(init);
 // console.log(checkList);

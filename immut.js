@@ -24513,19 +24513,10 @@ var makeInitialList = function makeInitialList(scale) {
   };
   return list;
 };
-var init = (0, _immutable.List)([(0, _immutable.List)(makeInitialList(2)), (0, _immutable.List)(makeInitialList(2))]
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-// List(makeInitialList(150)),
-);
+var init = (0, _immutable.List)([(0, _immutable.List)(makeInitialList(150)), (0, _immutable.List)(makeInitialList(150)), (0, _immutable.List)(makeInitialList(150)), (0, _immutable.List)(makeInitialList(150)), (0, _immutable.List)(makeInitialList(150)), (0, _immutable.List)(makeInitialList(150)), (0, _immutable.List)(makeInitialList(150)), (0, _immutable.List)(makeInitialList(150)), (0, _immutable.List)(makeInitialList(150)), (0, _immutable.List)(makeInitialList(150))]);
 
 // console.log(init);
-
+//
 // const checkList = init.map(t => t)
 // console.log(init);
 // console.log(checkList);
