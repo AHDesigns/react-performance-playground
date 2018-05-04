@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-  // process.stdout.write('\033c');
+  process.stdout.write('\033c');
   console.log(
     chalk.gray(line),
     chalk.cyan(`  Now listening on port: ${port}`),

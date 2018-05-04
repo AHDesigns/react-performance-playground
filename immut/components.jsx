@@ -1,5 +1,4 @@
 import React from 'react';
-import assert from 'assert'
 
 const logging = (log) => (
   log
@@ -7,24 +6,25 @@ const logging = (log) => (
   : () => {}
 )
 
-const log = logging(0);
+const log = logging(1);
 
 class ImmutComponent extends React.Component {
   shouldComponentUpdate(newProps) {
-    // console.log(this.props);
-    // console.log(this.newProps);
-    const keys = Object.keys(this.props)
-    // console.log(keys);
-    let update = false;
-    for (const key of keys) {
-      // console.log(key);
-      console.log(`${[key]}: ${this.props[key]} . is equal: ${this.props[key] === newProps[key]}`);
-      // if(!this.props[key].equals(newProps[key])) {
-      //   update = true;
-      //   return;
-      // }
+    // check through each prop for equality
+    for (const key in this.props) {
+      // see if the prop is an immutable data structure which responds to equals
+      if(typeof this.props[key] === 'object' &&
+        'equals' in this.props[key] &&
+        !this.props[key].equals(newProps[key])
+      ) {
+        return true
+      } else if (!this.props[key] === (newProps[key])) {
+        // else just do a normal check against the values
+        return true
+      }
     }
-    return update;
+
+    return false;
   }
 }
 
@@ -69,11 +69,13 @@ export class TodoList extends React.Component {
 }
 
 class TableRow extends ImmutComponent {
+  componentWillUpdate() {log(' render row'); }
+
   clickHandler = (param) => () => {
     param.toggleTodo(param.id)
   }
+
   render() {
-    log('render row');
     const { todos, toggleTodo } = this.props;
     return ( <div>
       { todos.map(t => <Todo
@@ -91,7 +93,6 @@ class Todo extends ImmutComponent {
 
   render() {
     const { todo } = this.props;
-    // log('render todo');
     return (
       <div className='todo__item' onClick={this.props.clickHandler}>
         <TodoDetails todo={todo.get('nestedData')} />
