@@ -31,6 +31,7 @@ const makeInitialList = (scale) => {
   };
   return list;
 }
+
 const init = List([
   List(makeInitialList(150)),
   List(makeInitialList(150)),
@@ -58,7 +59,6 @@ export default function reducer(todos=init, action) {
                 text: action.payload.text,
                 isDone: false,
                 img: '../cross.png'
-
               })
             })
           );
